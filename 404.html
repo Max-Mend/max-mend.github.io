@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>404 — Max-Mend</title>
+        <link rel="icon" type="image/png" href="assets/icon/icon.png" />
+        <link rel="stylesheet" href="style/404.css" />
+    </head>
+    <body>
+        <main class="wrap">
+            <div class="eyebrow">
+                <span class="prompt">~/max-mend$</span> cd ./this-page
+            </div>
+
+            <h1 class="headline">404</h1>
+            <p class="subhead">Segmentation fault. This route doesn't exist.</p>
+
+            <div class="terminal">
+                <div class="terminal-line">
+                    <span class="dim">$</span> gcc render_page.c -o page
+                </div>
+                <div class="terminal-line">
+                    <span class="err">render_page.c:404:9: error:</span> route
+                    not found
+                </div>
+                <div class="terminal-line terminal-indent">return NULL;</div>
+                <div class="terminal-line terminal-indent">
+                    <span class="err">^~~~</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="dim"
+                        >1 error generated. compilation terminated.</span
+                    ><span class="caret"></span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a class="btn primary" href="index.html"
+                    >cd ~ &nbsp;(back home)</a
+                >
+                <a
+                    class="btn"
+                    href="https://github.com/Max-Mend"
+                    target="_blank"
+                    rel="noopener"
+                    >open GitHub</a
+                >
+            </div>
+
+            <p class="footnote">
+                If you think this is a bug, feel free to open an issue — I fix
+                segfaults for a living.
+            </p>
+        </main>
+    </body>
+</html>

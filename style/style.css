@@ -1,0 +1,615 @@
+/* Header */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 24px;
+    box-sizing: border-box;
+
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+
+    z-index: 100;
+
+    transition:
+        background 0.3s ease,
+        backdrop-filter 0.3s ease;
+    pointer-events: none;
+}
+
+.site-header.scrolled {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    pointer-events: auto;
+}
+
+.header-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.header-avatar.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.header-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header-title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.header-title.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Hero */
+.hero-wrapper {
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    z-index: 10; /* було 50 — занизь, щоб не перекривало */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    transform: translate(-50%, 0)
+        translateY(calc(var(--scroll-progress) * -25vh))
+        scale(calc(1 - var(--scroll-progress) * 0.85));
+    transform-origin: top center;
+
+    opacity: calc(1 - var(--scroll-progress) * 1.1);
+
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.usr-icon {
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.3s ease;
+    animation: icon-appear 0.8s ease-out;
+}
+
+.usr-icon img {
+    width: 450px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes icon-appear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Arrow */
+.arrow-down {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: calc(0.6 * (1 - var(--scroll-progress) * 3));
+
+    animation:
+        icon-appear 0.8s ease-out,
+        arrow-bounce 1.8s ease-in-out 0.8s infinite;
+}
+
+.arrow-down img {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.15));
+}
+
+@keyframes arrow-bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(12px);
+        opacity: 1;
+    }
+}
+
+/* Content */
+
+.content {
+    position: relative;
+    z-index: 20; /* завжди вище hero */
+    width: 100%;
+    min-height: 100vh;
+    margin-top: 100vh;
+    padding: 60px 20px;
+    box-sizing: border-box;
+    background: #0a0a0a; /* підстраховка, щоб фото не просвічувало під контентом */
+}
+
+.content section {
+    max-width: 900px;
+    margin: 0 auto 100px;
+    padding: 0 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+
+.content section.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.content h2 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    position: relative;
+    padding-left: 16px;
+}
+
+.content h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 4px;
+    background: linear-gradient(180deg, #ff6b6b, #a855f7);
+    border-radius: 2px;
+}
+
+/* --- About --- */
+.about p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* --- Stack --- */
+.stack-icons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.stack-icons img {
+    width: 56px;
+    height: 56px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.stack-icons img:hover {
+    transform: translateY(-6px) scale(1.05);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- Projects --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    display: block;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.project-card h3 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0 0 8px;
+}
+
+.project-card p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.project-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.project-meta span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.projects-loading {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+}
+
+/* --- GitHub stats --- */
+.github-stats-custom {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.stat-number {
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+.lang-card {
+    grid-column: span 2;
+}
+
+.lang-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.lang-bar span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+}
+
+.lang-bar-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+    margin-top: 4px;
+}
+
+.lang-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #a855f7);
+    border-radius: 3px;
+    transition: width 0.6s ease;
+}
+
+/* --- Contact --- */
+.contact-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.contact-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    font-weight: 500;
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.contact-links a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(168, 85, 247, 0.5);
+    transform: translateY(-3px);
+}
+
+/* ============================= */
+/* Tablet (≤ 1024px) */
+/* ============================= */
+@media (max-width: 1024px) {
+    .usr-icon {
+        width: 380px;
+        height: 380px;
+    }
+
+    .usr-icon img {
+        width: 340px;
+        height: 340px;
+    }
+
+    .usr-icon:hover {
+        width: 400px;
+        height: 400px;
+    }
+
+    .usr-icon:hover img {
+        width: 360px;
+        height: 360px;
+    }
+
+    .content section {
+        max-width: 100%;
+    }
+
+    .lang-card {
+        grid-column: span 2;
+    }
+
+    .github-stats-custom {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================= */
+/* Mobile (≤ 768px) */
+/* ============================= */
+@media (max-width: 768px) {
+    .site-header {
+        height: 60px;
+        padding: 0 16px;
+        gap: 10px;
+    }
+
+    .header-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .header-title {
+        font-size: 14px;
+    }
+
+    /* Hero */
+    .hero-wrapper {
+        top: 20%;
+        gap: 16px;
+    }
+
+    .usr-icon {
+        width: 240px;
+        height: 240px;
+    }
+
+    .usr-icon img {
+        width: 210px;
+        height: 210px;
+    }
+
+    .usr-icon:hover {
+        width: 240px;
+        height: 240px;
+    }
+
+    .usr-icon:hover img {
+        width: 210px;
+        height: 210px;
+    }
+
+    .arrow-down {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Content */
+    .content {
+        padding: 40px 16px;
+    }
+
+    .content section {
+        margin: 0 auto 60px;
+        padding: 0 8px;
+    }
+
+    .content h2 {
+        font-size: 22px;
+        margin-bottom: 18px;
+    }
+
+    .about p {
+        font-size: 16px;
+    }
+
+    /* Stack icons */
+    .stack-icons img {
+        width: 44px;
+        height: 44px;
+        padding: 8px;
+    }
+
+    /* Projects */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .project-card {
+        padding: 18px;
+    }
+
+    .project-card h3 {
+        font-size: 16px;
+    }
+
+    .project-card p {
+        font-size: 13px;
+    }
+
+    /* GitHub stats */
+    .github-stats-custom {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .stat-number {
+        font-size: 26px;
+    }
+
+    .lang-card {
+        grid-column: span 2;
+    }
+
+    /* Contact */
+    .contact-links {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .contact-links a {
+        text-align: center;
+    }
+}
+
+/* ============================= */
+/* Small Mobile (≤ 420px) */
+/* ============================= */
+@media (max-width: 420px) {
+    .usr-icon {
+        width: 180px;
+        height: 180px;
+    }
+
+    .usr-icon img {
+        width: 155px;
+        height: 155px;
+    }
+
+    .usr-icon:hover {
+        width: 180px;
+        height: 180px;
+    }
+
+    .usr-icon:hover img {
+        width: 155px;
+        height: 155px;
+    }
+
+    .header-title {
+        font-size: 13px;
+    }
+
+    .github-stats-custom {
+        grid-template-columns: 1fr;
+    }
+
+    .lang-card {
+        grid-column: span 1;
+    }
+
+    .stat-number {
+        font-size: 24px;
+    }
+}
+
+@media (hover: none) {
+    .usr-icon:hover,
+    .project-card:hover,
+    .stat-card:hover,
+    .stack-icons img:hover,
+    .contact-links a:hover {
+        transform: none;
+        box-shadow: none;
+        background: inherit;
+        border-color: inherit;
+    }
+}
